@@ -1,7 +1,58 @@
 <canvas id="ctx"></canvas>
-<button id="run"></button>
+<button onclick="running=true;loop();">Run</button>
+<button onclick="running=false;loop();">Stop</button>
 <script>
-const ctx=document.getElementById("ctx").getContext2d();
-const run=document.getElementById("run");
-
+const ctx=document.getElementById("ctx").getContext("2d");
+const myCanvas=document.getElementById("ctx");
+var running=false;
+const Tile=function(x,y){
+	this.type="air"/*enum this.type = {AIR,PISTON,BROADCAST,LISTENER,INPUT,OUTPUT}*/
+	this.x=x;
+	this.y=y;
+	this.tired=false;
+	this.prop=null;
+	this.queue=null;
+	this.power=false;
+	this.update=function(lis){
+		if(!this.tired){
+			switch(this.type){
+				case "air":
+					break;
+				case "piston":
+					if(this.power){
+						switch(this.prop){
+							case "UP":
+								let ok=lis[this.x][this.y]
+						}
+					}
+			}
+		}
+	};
+	this.draw=function(){
+		ctx.fillRect
+	}
+}
+var tiles=[];
+for(let i=0;i<=256;i++){
+	for(let j=0;j<=256;j++){
+		tiles[i][j]=new Tile(i,j);
+	}
+}
+function loop(e) {
+	ctx.clearRect(0, 0, myCanvas.width, myCanvas.height); 
+	var rect = myCanvas.getBoundingClientRect();
+	var mouse={x:e.clientX - rect.left, y:e.clientY - rect.top}
+	if(running){
+		tiles[0][0].update(tiles);
+		for(let i=0;i<=256;i++){
+			for(let j=0;j<=256;j++){
+				tiles[i][j].draw();
+				tiles[i][j].tired=false;
+			}
+		}
+	}else{
+		
+	}
+};
+document.getElementById("ctx").addEventListener("mouseup", loop);   
 </script>
